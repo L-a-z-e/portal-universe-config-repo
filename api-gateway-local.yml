@@ -1,0 +1,13 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/auth-service
+          jwk-set-uri: http://localhost:8080/auth-service/oauth2/jwks
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.web.reactive: TRACE
+    reactor.netty.http.client: TRACE
+    org.springframework.security: DEBUG

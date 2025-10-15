@@ -1,0 +1,45 @@
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+          routes:
+            - id: blog-service-route
+              uri: lb://blog-service
+              predicates:
+                - Path=/api/blog/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: blogCircuitBreaker
+                    fallbackUri: forward:/fallback/blog
+            - id: shopping-service-route
+              uri: lb://shopping-service
+              predicates:
+                - Path=/api/shopping/**
+            - id: auth-service-api
+              uri: lb://auth-service
+              predicates:
+                - Path=/api/auth/**
+            - id: auth-service-route
+              uri: lb://auth-service
+              predicates:
+                - Path=/auth-service/**
+              filters:
+                - StripPrefix=1
+
+resilience4j.circuitbreaker:
+  configs:
+    default: # 기본 설정
+      sliding-window-type: count_based # 카운트 기반으로 실패율 계산
+      sliding-window-size: 20 # 최근 20개의 요청을 기준으로 판단
+      failure-rate-threshold: 50 # 실패율이 50% 이상이면 차단기 열림
+      wait-duration-in-open-state: 10s # 차단기가 열린 후, 반-열림 상태까지 대기할 시간 (10초)
+  instances:
+    # 위에서 지정한 'blogCircuitBreaker'에 대한 설정
+    blogCircuitBreaker:
+      base-config: default # 'default' 설정을 상속받음

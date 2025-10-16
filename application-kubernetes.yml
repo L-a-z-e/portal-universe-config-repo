@@ -1,0 +1,10 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka
+  instance:
+    prefer-ip-address: true
+
+spring:
+  kafka:
+    bootstrap-servers: kafka:29092

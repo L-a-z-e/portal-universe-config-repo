@@ -1,6 +1,13 @@
 spring:
   cloud:
     gateway:
+      x-forwarded:
+        enabled: true
+        for-enabled: true
+        host-enabled: true
+        port-enabled: true
+        proto-enabled: true
+        prefix-enabled: true
       server:
         webflux:
           discovery:

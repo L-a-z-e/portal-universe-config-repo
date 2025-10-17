@@ -31,6 +31,7 @@ spring:
                 - Path=/auth-service/**
               filters:
                 - StripPrefix=1
+                - PreserveHostHeader
 
 resilience4j.circuitbreaker:
   configs:

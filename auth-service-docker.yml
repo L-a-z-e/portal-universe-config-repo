@@ -15,6 +15,9 @@ spring:
     oauth2:
       authorizationserver:
         issuer: http://api-gateway:8080/auth-service
+      client:
+        redirect-uris: http://localhost:30000/callback
+        post-logout-redirect-uris: http://localhost:30000
 
 logging:
   level:

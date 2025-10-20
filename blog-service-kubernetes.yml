@@ -6,7 +6,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://api-gateway:8080/auth-service
+          issuer-uri: http://portal-universe:8080/auth-service
 
 logging:
   level:

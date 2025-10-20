@@ -3,7 +3,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://api-gateway:8080/auth-service
+          issuer-uri: http://portal-universe:8080/auth-service
           jwk-set-uri: http://auth-service:8081/oauth2/jwks
 
 logging:

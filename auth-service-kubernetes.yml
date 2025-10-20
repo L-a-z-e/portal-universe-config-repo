@@ -18,10 +18,10 @@ spring:
       client:
         redirect-uris:
           - http://localhost:30000/callback
-          - http://portal-universe/callback
+          - http://portal-universe:8080/callback
         post-logout-redirect-uris:
           - http://localhost:30000
-          - http://portal-universe
+          - http://portal-universe:8080
 
 logging:
   level:

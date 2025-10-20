@@ -9,6 +9,7 @@ spring:
 logging:
   level:
     root: INFO
+    com.portal.universe.apigateway.config: DEBUG
   pattern:
     level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
 

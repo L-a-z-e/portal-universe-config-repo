@@ -2,7 +2,7 @@ spring:
   cloud:
     gateway:
       default-filters:
-        - PreserveHostHeader
+        - name: PreserveHostHeader
       x-forwarded:
         enabled: true
         for-enabled: true

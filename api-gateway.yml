@@ -41,6 +41,12 @@ spring:
               filters:
                 - StripPrefix=1
                 - name: PreserveHostHeader
+            - id: auth-service-login-route
+              uri: lb://AUTH-SERVICE
+              predicates:
+                - Path=/login, /assets/**
+              filters:
+                - name: PreserveHostHeader
 
 resilience4j.circuitbreaker:
   configs:

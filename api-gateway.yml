@@ -5,8 +5,6 @@ spring:
         - name: PreserveHostHeader
       server:
         webflux:
-          trusted-proxies:
-            - 0.0.0.0/0  # 모든 프록시 신뢰 (개발 환경)
           x-forwarded:
             enabled: true
             for-enabled: true

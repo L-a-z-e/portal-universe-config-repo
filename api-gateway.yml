@@ -14,7 +14,7 @@ spring:
             prefix-enabled: true
           discovery:
             locator:
-              enabled: true
+              enabled: false
               lower-case-service-id: true
           routes:
             - id: blog-service-route

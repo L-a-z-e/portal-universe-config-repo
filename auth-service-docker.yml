@@ -22,9 +22,10 @@ spring:
 logging:
   level:
     root: INFO
-    org.springframework.security: DEBUG
-    org.springframework.security.oauth2: DEBUG
-    org.springframework.web: DEBUG
+    org.springframework.security: TRACE
+    org.springframework.security.web: TRACE
+    org.springframework.security.oauth2.server.authorization: TRACE
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
   pattern:
     level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
 

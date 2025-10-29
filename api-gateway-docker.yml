@@ -9,9 +9,9 @@ spring:
 logging:
   level:
     root: INFO
-    org.springframework.cloud.gateway: DEBUG
-    org.springframework.http.server.reactive: DEBUG
-    reactor.netty.http.client: DEBUG
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.web.server: DEBUG
+    reactor.netty.http.server: DEBUG
   pattern:
     level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
 

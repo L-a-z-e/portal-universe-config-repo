@@ -18,7 +18,7 @@ spring:
               lower-case-service-id: true
           routes:
             - id: blog-service-route
-              uri: lb://blog-service
+              uri: lb://BLOG-SERVICE
               predicates:
                 - Path=/api/blog/**
               filters:
@@ -27,15 +27,15 @@ spring:
                     name: blogCircuitBreaker
                     fallbackUri: forward:/fallback/blog
             - id: shopping-service-route
-              uri: lb://shopping-service
+              uri: lb://SHOPPING-SERVICE
               predicates:
                 - Path=/api/shopping/**
             - id: auth-service-api
-              uri: lb://auth-service
+              uri: lb://AUTH-SERVICE
               predicates:
                 - Path=/api/auth/**
             - id: auth-service-route
-              uri: lb://auth-service
+              uri: lb://AUTH-SERVICE
               predicates:
                 - Path=/auth-service/**
               filters:

@@ -1,61 +1,111 @@
+# ============================================
+# API Gateway 공통 설정 (라우팅 규칙)
+# ============================================
+
+server:
+  netty:
+    connection-timeout: 2s
+
 spring:
   cloud:
     gateway:
+      # 전역 필터
       default-filters:
         - name: PreserveHostHeader
-      server:
-        webflux:
-          x-forwarded:
-            enabled: true
-            for-enabled: true
-            host-enabled: true
-            port-enabled: true
-            proto-enabled: true
-            prefix-enabled: true
-          discovery:
-            locator:
-              enabled: false
-              lower-case-service-id: true
-          routes:
-            - id: blog-service-route
-              uri: lb://blog-service
-              predicates:
-                - Path=/api/blog/**
-              filters:
-                - name: CircuitBreaker
-                  args:
-                    name: blogCircuitBreaker
-                    fallbackUri: forward:/fallback/blog
-            - id: shopping-service-route
-              uri: lb://shopping-service
-              predicates:
-                - Path=/api/shopping/**
-            - id: auth-service-api
-              uri: lb://auth-service
-              predicates:
-                - Path=/api/auth/**
-            - id: auth-service-route
-              uri: lb://auth-service
-              predicates:
-                - Path=/auth-service/**
-              filters:
-                - StripPrefix=1
-                - name: PreserveHostHeader
-            - id: auth-service-login-route
-              uri: lb://AUTH-SERVICE
-              predicates:
-                - Path=/login, /assets/**
-              filters:
-                - name: PreserveHostHeader
 
-resilience4j.circuitbreaker:
-  configs:
-    default: # 기본 설정
-      sliding-window-type: count_based # 카운트 기반으로 실패율 계산
-      sliding-window-size: 20 # 최근 20개의 요청을 기준으로 판단
-      failure-rate-threshold: 50 # 실패율이 50% 이상이면 차단기 열림
-      wait-duration-in-open-state: 10s # 차단기가 열린 후, 반-열림 상태까지 대기할 시간 (10초)
-  instances:
-    # 위에서 지정한 'blogCircuitBreaker'에 대한 설정
-    blogCircuitBreaker:
-      base-config: default # 'default' 설정을 상속받음
+      # X-Forwarded 헤더 처리
+      x-forwarded:
+        enabled: true
+        for-enabled: true
+        host-enabled: true
+        port-enabled: true
+        proto-enabled: true
+        prefix-enabled: true
+
+      # Discovery 설정
+      discovery:
+        locator:
+          enabled: false
+          lower-case-service-id: true
+
+      # 라우팅 규칙
+      routes:
+        # ========== Auth Service ==========
+        - id: auth-service-api
+          uri: lb://auth-service
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: authCircuitBreaker
+                fallbackUri: forward:/fallback/auth
+
+        - id: auth-service-internal
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth-service/**
+          filters:
+            - StripPrefix=1
+            - name: PreserveHostHeader
+
+        - id: auth-service-oauth2
+          uri: lb://auth-service
+          predicates:
+            - Path=/login,/logout,/oauth2/**,/assets/**
+          filters:
+            - name: PreserveHostHeader
+
+        # ========== Blog Service ==========
+        - id: blog-service-route
+          uri: lb://blog-service
+          predicates:
+            - Path=/api/blog/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: blogCircuitBreaker
+                fallbackUri: forward:/fallback/blog
+
+        # ========== Shopping Service ==========
+        - id: shopping-service-route
+          uri: lb://shopping-service
+          predicates:
+            - Path=/api/shopping/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: shoppingCircuitBreaker
+                fallbackUri: forward:/fallback/shopping
+
+# Resilience4j Circuit Breaker 설정
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-type: count_based
+        sliding-window-size: 20
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 10s
+        permitted-number-of-calls-in-half-open-state: 5
+        automatic-transition-from-open-to-half-open-enabled: true
+
+    instances:
+      authCircuitBreaker:
+        base-config: default
+      blogCircuitBreaker:
+        base-config: default
+      shoppingCircuitBreaker:
+        base-config: default
+
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 5s
+    instances:
+      authCircuitBreaker:
+        base-config: default
+      blogCircuitBreaker:
+        base-config: default
+      shoppingCircuitBreaker:
+        base-config: default

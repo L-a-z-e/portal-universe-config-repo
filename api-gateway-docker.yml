@@ -1,3 +1,7 @@
+# ============================================
+# API Gateway - Docker Compose 환경
+# ============================================
+
 spring:
   security:
     oauth2:
@@ -6,38 +10,10 @@ spring:
           issuer-uri: http://api-gateway:8080/auth-service
           jwk-set-uri: http://auth-service:8081/oauth2/jwks
 
+# Docker 환경 디버깅용 상세 로그
 logging:
   level:
-    root: INFO
     org.springframework.cloud.gateway: TRACE
     org.springframework.web.server: DEBUG
     reactor.netty.http.server: DEBUG
-  pattern:
-    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,prometheus,metrics
-      base-path: /actuator
-
-  endpoint:
-    health:
-      show-details: always
-
-  prometheus:
-    metrics:
-      export:
-        enabled: true
-
-  tracing:
-    sampling:
-      probability: 1.0
-  zipkin:
-    tracing:
-      endpoint: http://zipkin:9411/api/v2/spans
-
-  metrics:
-    tags:
-      application: ${spring.application.name}
+    org.springframework.security: DEBUG

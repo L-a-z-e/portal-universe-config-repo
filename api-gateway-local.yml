@@ -1,10 +1,17 @@
+# ============================================
+# API Gateway - 로컬 개발 환경
+# ============================================
+
 spring:
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/auth-service
-          jwk-set-uri: http://localhost:8080/auth-service/oauth2/jwks
+          jwk-set-uri: http://localhost:8081/oauth2/jwks
+
+# 로컬 디버깅용 로그
 logging:
   level:
-    root: INFO
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.security: DEBUG

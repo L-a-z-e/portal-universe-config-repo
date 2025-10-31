@@ -1,3 +1,7 @@
+# ============================================
+# API Gateway - Kubernetes 환경
+# ============================================
+
 spring:
   security:
     oauth2:
@@ -6,36 +10,8 @@ spring:
           issuer-uri: http://portal-universe:8080/auth-service
           jwk-set-uri: http://auth-service:8081/oauth2/jwks
 
+# 운영 환경 로그
 logging:
   level:
-    root: INFO
-    com.portal.universe.apigateway.config: DEBUG
-  pattern:
-    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,prometheus,metrics
-      base-path: /actuator
-
-  endpoint:
-    health:
-      show-details: always
-
-  prometheus:
-    metrics:
-      export:
-        enabled: true
-
-  tracing:
-    sampling:
-      probability: 1.0
-  zipkin:
-    tracing:
-      endpoint: http://zipkin:9411/api/v2/spans
-
-  metrics:
-    tags:
-      application: ${spring.application.name}
+    org.springframework.cloud.gateway: INFO
+    com.portal.universe.apigateway: DEBUG

@@ -1,10 +1,51 @@
+# ============================================
+# Kubernetes 환경 공통 설정
+# ============================================
+
+server:
+  forward-headers-strategy: framework
+
 eureka:
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 10
+    lease-expiration-duration-in-seconds: 30
   client:
     service-url:
       defaultZone: http://discovery-service:8761/eureka
-  instance:
-    prefer-ip-address: true
+    registry-fetch-interval-seconds: 10
 
 spring:
   kafka:
     bootstrap-servers: kafka:29092
+
+# Kubernetes 환경 모니터링 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+      liveness:
+        enabled: true
+      readiness:
+        enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  tracing:
+    sampling:
+      probability: 1.0
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      environment: kubernetes

@@ -1,0 +1,49 @@
+# ============================================
+# Auth Service 공통 설정
+# ============================================
+
+spring:
+  # DataSource 공통 설정
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 20000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  # JPA 설정
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  # OAuth2 Authorization Server 공통 설정
+  security:
+    oauth2:
+      authorizationserver:
+        client:
+          portal-client:
+            client-id: portal-client
+            client-secret: '{cipher}AQA...'  # TODO: 암호화 적용
+            client-authentication-methods:
+              - client_secret_basic
+            authorization-grant-types:
+              - authorization_code
+              - refresh_token
+            scopes:
+              - openid
+              - profile
+              - email
+            require-authorization-consent: true
+
+# 기본 로그 레벨
+logging:
+  level:
+    root: INFO
+    com.portal.universe.authservice: DEBUG

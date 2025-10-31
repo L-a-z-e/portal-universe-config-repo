@@ -23,25 +23,6 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
 
-  # OAuth2 Authorization Server 공통 설정
-  security:
-    oauth2:
-      authorizationserver:
-        client:
-          portal-client:
-            client-id: portal-client
-            client-secret: '{cipher}AQA...'  # TODO: 암호화 적용
-            client-authentication-methods:
-              - client_secret_basic
-            authorization-grant-types:
-              - authorization_code
-              - refresh_token
-            scopes:
-              - openid
-              - profile
-              - email
-            require-authorization-consent: true
-
 # 기본 로그 레벨
 logging:
   level:

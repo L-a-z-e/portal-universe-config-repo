@@ -8,27 +8,23 @@ spring:
     password: ${DB_PASSWORD:password}
   
   jpa:
-    show-sql: true  # 로컬에서는 SQL 출력
+    show-sql: true
     hibernate:
       ddl-auto: update
-  
+
   security:
     oauth2:
       authorizationserver:
         issuer: http://localhost:8080/auth-service
 
-# Gateway 기본 URL 설정
-gateway:
-  base-url: http://localhost:8080
-
-# OAuth2 클라이언트 커스텀 설정
+# OAuth2 클라이언트 환경별 설정 (커스텀 경로)
 oauth2:
   client:
     redirect-uris: http://localhost:30000/callback
     post-logout-redirect-uris: http://localhost:30000
 
-# 로컬 디버깅용 상세 로그
 logging:
   level:
     org.springframework.security: DEBUG
     org.springframework.security.oauth2: DEBUG
+    org.springframework.boot.context.config: DEBUG

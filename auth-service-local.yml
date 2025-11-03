@@ -16,6 +16,8 @@ spring:
     oauth2:
       authorizationserver:
         issuer: http://localhost:8080/auth-service
+        settings:
+          login-page-url: http://localhost:8080/auth-service/login
 
 # OAuth2 클라이언트 환경별 설정 (커스텀 경로)
 oauth2:

@@ -25,7 +25,7 @@ spring:
       # Discovery 설정
       discovery:
         locator:
-          enabled: false
+          enabled: true
           lower-case-service-id: true
 
       # 라우팅 규칙

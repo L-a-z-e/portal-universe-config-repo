@@ -31,39 +31,46 @@ spring:
       # 라우팅 규칙
       routes:
         # ========== Auth Service ==========
-        # ========== login ==========
-        - id: auth-service-login-handler
+        # OIDC Discovery, JWK Set, OAuth2 프로토콜
+        - id: auth-service-oidc-discovery
           uri: lb://auth-service
           predicates:
-            - Path=/login
-            - Method=GET,POST
+            - Path=/auth-service/.well-known/**
           filters:
-            - RewritePath=/login, /auth-service/login
+            - StripPrefix=1
             - name: PreserveHostHeader
           order: 0
 
-        # ========== 정적 리소스 처리 ==========
-        - id: auth-service-static-resources
+        - id: auth-service-oauth2-protocol
           uri: lb://auth-service
           predicates:
-            - Path=/default-ui.css,/favicon.ico,/webjars/**
-          filters:
-            - RewritePath=/(.*), /auth-service/$1
-            - name: PreserveHostHeader
-          order: 0
-
-        # ========== OAuth2/OIDC 프로토콜 ==========
-        - id: auth-service-oauth2
-          uri: lb://auth-service
-          predicates:
-            - Path=/auth-service/oauth2/**,/auth-service/.well-known/**,/auth-service/connect/**
+            - Path=/auth-service/oauth2/**
           filters:
             - StripPrefix=1
             - name: PreserveHostHeader
           order: 1
 
-        # ========== 로그아웃 페이지  ==========
-        - id: auth-service-security-pages
+        - id: auth-service-oidc-endpoints
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth-service/connect/**
+          filters:
+            - StripPrefix=1
+            - name: PreserveHostHeader
+          order: 2
+
+        # ========== 로그인/로그아웃 페이지 ==========
+        - id: auth-service-login
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth-service/login
+            - Method=GET,POST
+          filters:
+            - StripPrefix=1
+            - name: PreserveHostHeader
+          order: 3
+
+        - id: auth-service-logout
           uri: lb://auth-service
           predicates:
             - Path=/auth-service/logout
@@ -71,7 +78,17 @@ spring:
           filters:
             - StripPrefix=1
             - name: PreserveHostHeader
-          order: 2
+          order: 4
+
+        # ========== 정적 리소스 ==========
+        - id: auth-service-static
+          uri: lb://auth-service
+          predicates:
+            - Path=/auth-service/default-ui.css,/auth-service/favicon.ico,/auth-service/webjars/**
+          filters:
+            - StripPrefix=1
+            - name: PreserveHostHeader
+          order: 5
 
         # ========== Auth Service REST API ==========
         - id: auth-service-api
@@ -84,7 +101,7 @@ spring:
               args:
                 name: authCircuitBreaker
                 fallbackUri: forward:/fallback/auth
-          order: 3
+          order: 6
 
         # ========== Blog Service ==========
         - id: blog-service-route

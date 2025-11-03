@@ -8,7 +8,7 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/auth-service
-          jwk-set-uri: http://localhost:8080/auth-service
+          jwk-set-uri: http://localhost:8080/auth-service/oauth2/jwks
 
 # 로컬 디버깅용 로그
 logging:

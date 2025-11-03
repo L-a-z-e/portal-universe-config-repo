@@ -31,8 +31,29 @@ spring:
       # 라우팅 규칙
       routes:
         # ========== Auth Service ==========
-        # 1. OAuth2/OIDC 프로토콜 엔드포인트
-        - id: auth-service-protocol
+        # ========== POST /login ==========
+        - id: auth-service-login-post-handler
+          uri: lb://auth-service
+          predicates:
+            - Path=/login
+            - Method=POST
+          filters:
+            - RewritePath=/login, /auth-service/login
+            - name: PreserveHostHeader
+          order: 0
+
+        # ========== 정적 리소스 처리 ==========
+        - id: auth-service-static-resources
+          uri: lb://auth-service
+          predicates:
+            - Path=/default-ui.css,/favicon.ico,/webjars/**
+          filters:
+            - RewritePath=/(.*), /auth-service/$1
+            - name: PreserveHostHeader
+          order: 0
+
+        # ========== OAuth2/OIDC 프로토콜 ==========
+        - id: auth-service-oauth2
           uri: lb://auth-service
           predicates:
             - Path=/auth-service/oauth2/**,/auth-service/.well-known/**,/auth-service/connect/**
@@ -41,46 +62,29 @@ spring:
             - name: PreserveHostHeader
           order: 1
 
-        # 2. 로그인/로그아웃 페이지 (HTML)
-        - id: auth-service-pages
+        # ========== 로그인/로그아웃 페이지 ==========
+        - id: auth-service-security-pages
           uri: lb://auth-service
           predicates:
             - Path=/auth-service/login,/auth-service/logout
+            - Method=GET
           filters:
             - StripPrefix=1
             - name: PreserveHostHeader
           order: 2
 
-        # 3. 정적 리소스 (CSS, JS 등)
-        - id: auth-service-assets
-          uri: lb://auth-service
-          predicates:
-            - Path=/auth-service/assets/**,/auth-service/resources/**
-          filters:
-            - StripPrefix=1
-          order: 3
-
-        # 4. Auth Service REST API
+        # ========== Auth Service REST API ==========
         - id: auth-service-api
           uri: lb://auth-service
           predicates:
-            - Path=/auth-service/api/**
+            - Path=/api/auth/**
           filters:
-            - StripPrefix=1
+            - StripPrefix=2  # /api/auth 제거
             - name: CircuitBreaker
               args:
                 name: authCircuitBreaker
                 fallbackUri: forward:/fallback/auth
-          order: 4
-
-        # 5. 기타 Auth Service 내부 경로 (최하위)
-        - id: auth-service-default
-          uri: lb://auth-service
-          predicates:
-            - Path=/auth-service/**
-          filters:
-            - StripPrefix=1
-          order: 5
+          order: 3
 
         # ========== Blog Service ==========
         - id: blog-service-route
@@ -88,6 +92,7 @@ spring:
           predicates:
             - Path=/api/blog/**
           filters:
+            - StripPrefix=2
             - name: CircuitBreaker
               args:
                 name: blogCircuitBreaker
@@ -99,6 +104,7 @@ spring:
           predicates:
             - Path=/api/shopping/**
           filters:
+            - StripPrefix=2
             - name: CircuitBreaker
               args:
                 name: shoppingCircuitBreaker

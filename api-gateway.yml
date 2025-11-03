@@ -31,6 +31,17 @@ spring:
       # 라우팅 규칙
       routes:
         # ========== Auth Service ==========
+        # ========== login ==========
+        - id: auth-service-login-handler
+          uri: lb://auth-service
+          predicates:
+            - Path=/login
+            - Method=GET,POST
+          filters:
+            - RewritePath=/login, /auth-service/login
+            - name: PreserveHostHeader
+          order: 0
+
         # ========== 정적 리소스 처리 ==========
         - id: auth-service-static-resources
           uri: lb://auth-service

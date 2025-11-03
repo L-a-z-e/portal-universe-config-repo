@@ -31,7 +31,7 @@ spring:
       # 라우팅 규칙
       routes:
         # ========== Auth Service ==========
-        # OIDC Discovery, JWK Set, OAuth2 프로토콜
+        # ========== OIDC Discovery ==========
         - id: auth-service-oidc-discovery
           uri: lb://auth-service
           predicates:
@@ -41,6 +41,7 @@ spring:
             - name: PreserveHostHeader
           order: 0
 
+        # ========== OAuth2 프로토콜 엔드포인트 ==========
         - id: auth-service-oauth2-protocol
           uri: lb://auth-service
           predicates:
@@ -50,6 +51,7 @@ spring:
             - name: PreserveHostHeader
           order: 1
 
+        # ========== OIDC 엔드포인트 ==========
         - id: auth-service-oidc-endpoints
           uri: lb://auth-service
           predicates:
@@ -60,25 +62,15 @@ spring:
           order: 2
 
         # ========== 로그인/로그아웃 페이지 ==========
-        - id: auth-service-login
+        - id: auth-service-login-logout
           uri: lb://auth-service
           predicates:
-            - Path=/auth-service/login
+            - Path=/auth-service/login,/auth-service/logout
             - Method=GET,POST
           filters:
             - StripPrefix=1
             - name: PreserveHostHeader
           order: 3
-
-        - id: auth-service-logout
-          uri: lb://auth-service
-          predicates:
-            - Path=/auth-service/logout
-            - Method=GET,POST
-          filters:
-            - StripPrefix=1
-            - name: PreserveHostHeader
-          order: 4
 
         # ========== 정적 리소스 ==========
         - id: auth-service-static
@@ -88,7 +80,7 @@ spring:
           filters:
             - StripPrefix=1
             - name: PreserveHostHeader
-          order: 5
+          order: 4
 
         # ========== Auth Service REST API ==========
         - id: auth-service-api
@@ -96,12 +88,12 @@ spring:
           predicates:
             - Path=/api/auth/**
           filters:
-            - StripPrefix=2  # /api/auth 제거
+            - StripPrefix=2
             - name: CircuitBreaker
               args:
                 name: authCircuitBreaker
                 fallbackUri: forward:/fallback/auth
-          order: 6
+          order: 5
 
         # ========== Blog Service ==========
         - id: blog-service-route

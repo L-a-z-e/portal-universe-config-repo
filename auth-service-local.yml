@@ -25,6 +25,8 @@ oauth2:
 
 logging:
   level:
+    root: INFO
+    com.portal.universe.authservice: DEBUG
     org.springframework.security: DEBUG
     org.springframework.security.oauth2: DEBUG
     org.springframework.boot.context.config: DEBUG

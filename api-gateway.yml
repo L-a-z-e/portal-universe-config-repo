@@ -62,11 +62,11 @@ spring:
             - name: PreserveHostHeader
           order: 1
 
-        # ========== 로그인/로그아웃 페이지 ==========
+        # ========== 로그아웃 페이지  ==========
         - id: auth-service-security-pages
           uri: lb://auth-service
           predicates:
-            - Path=/auth-service/login,/auth-service/logout
+            - Path=/auth-service/logout
             - Method=GET,POST
           filters:
             - StripPrefix=1

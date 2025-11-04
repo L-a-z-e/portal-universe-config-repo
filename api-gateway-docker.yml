@@ -13,7 +13,4 @@ spring:
 # Docker 환경 디버깅용 상세 로그
 logging:
   level:
-    org.springframework.cloud.gateway: TRACE
-    org.springframework.web.server: DEBUG
-    reactor.netty.http.server: DEBUG
-    org.springframework.security: DEBUG
+    root: INFO

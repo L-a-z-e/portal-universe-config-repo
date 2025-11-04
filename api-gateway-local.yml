@@ -13,5 +13,4 @@ spring:
 # 로컬 디버깅용 로그
 logging:
   level:
-    org.springframework.cloud.gateway: DEBUG
-    org.springframework.security: DEBUG
+    root: INFO

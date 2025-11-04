@@ -13,5 +13,4 @@ spring:
 # 운영 환경 로그
 logging:
   level:
-    org.springframework.cloud.gateway: INFO
-    com.portal.universe.apigateway: DEBUG
+    root: INFO

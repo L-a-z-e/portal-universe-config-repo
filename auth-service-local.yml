@@ -1,6 +1,10 @@
 # ============================================
 # Auth Service - 로컬 개발 환경
 # ============================================
+server:
+  forward-headers-strategy: framework
+  use-forward-headers: true
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3307/auth_db?useSSL=false&allowPublicKeyRetrieval=true

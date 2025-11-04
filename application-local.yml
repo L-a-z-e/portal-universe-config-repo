@@ -4,6 +4,10 @@
 server:
   forward-headers-strategy: framework
 
+app:
+  frontend:
+    base-url: http://localhost:30000
+
 eureka:
   instance:
     prefer-ip-address: false

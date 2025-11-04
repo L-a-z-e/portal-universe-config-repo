@@ -31,7 +31,7 @@ spring:
       # 라우팅 규칙
       routes:
         # ========== Auth Service ==========
-        # ========== OIDC Discovery ==========
+        # OIDC Discovery
         - id: auth-service-oidc-discovery
           uri: lb://auth-service
           predicates:
@@ -39,9 +39,12 @@ spring:
           filters:
             - StripPrefix=1
             - name: PreserveHostHeader
+            - name: OidcForwardedHeaders
+              args:
+                enabled: true
           order: 0
 
-        # ========== OAuth2 프로토콜 엔드포인트 ==========
+        # OAuth2 Protocol
         - id: auth-service-oauth2-protocol
           uri: lb://auth-service
           predicates:
@@ -49,9 +52,12 @@ spring:
           filters:
             - StripPrefix=1
             - name: PreserveHostHeader
+            - name: OidcForwardedHeaders
+              args:
+                enabled: true
           order: 1
 
-        # ========== OIDC 엔드포인트 ==========
+        # OIDC Endpoints
         - id: auth-service-oidc-endpoints
           uri: lb://auth-service
           predicates:
@@ -59,9 +65,12 @@ spring:
           filters:
             - StripPrefix=1
             - name: PreserveHostHeader
+            - name: OidcForwardedHeaders
+              args:
+                enabled: true
           order: 2
 
-        # ========== 로그인/로그아웃 페이지 ==========
+        # Login/Logout Pages
         - id: auth-service-login-logout
           uri: lb://auth-service
           predicates:
@@ -70,9 +79,12 @@ spring:
           filters:
             - StripPrefix=1
             - name: PreserveHostHeader
+            - name: OidcForwardedHeaders
+              args:
+                enabled: true
           order: 3
 
-        # ========== 정적 리소스 ==========
+        # Static assets (로그인 UI 리소스)
         - id: auth-service-static
           uri: lb://auth-service
           predicates:
@@ -80,9 +92,12 @@ spring:
           filters:
             - StripPrefix=1
             - name: PreserveHostHeader
+            - name: OidcForwardedHeaders
+              args:
+                enabled: true
           order: 4
 
-        # ========== Auth Service REST API ==========
+        # Auth REST API (OIDC 아님: 필터 미적용)
         - id: auth-service-api
           uri: lb://auth-service
           predicates:

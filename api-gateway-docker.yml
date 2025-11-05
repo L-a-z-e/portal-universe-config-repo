@@ -8,7 +8,7 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://api-gateway:8080/auth-service
-          jwk-set-uri: http://auth-service:8081/oauth2/jwks
+          jwk-set-uri: http://api-gateway:8080/auth-service/oauth2/jwks
 
 # Docker 환경 디버깅용 상세 로그
 logging:

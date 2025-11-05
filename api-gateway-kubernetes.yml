@@ -8,7 +8,7 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://portal-universe:8080/auth-service
-          jwk-set-uri: http://auth-service:8081/oauth2/jwks
+          jwk-set-uri: http://api-gateway:8080/auth-service/oauth2/jwks
 
 # 운영 환경 로그
 logging:

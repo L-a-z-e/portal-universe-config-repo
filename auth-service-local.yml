@@ -4,6 +4,9 @@
 server:
   forward-headers-strategy: framework
   use-forward-headers: true
+  servlet:
+    session:
+      timeout: 1h
 
 spring:
   datasource:
@@ -24,7 +27,9 @@ spring:
 # OAuth2 클라이언트 환경별 설정 (커스텀 경로)
 oauth2:
   client:
-    redirect-uris: http://localhost:30000/callback
+    redirect-uris:
+      - http://localhost:30000/callback
+      - http://localhost:30000/silent-renew.html
     post-logout-redirect-uris: http://localhost:30000
 
 logging:

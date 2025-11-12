@@ -20,14 +20,6 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
 
-aws:
-  s3:
-    access-key: test
-    secret-key: test
-    bucket-name: test-bucket
-    region: ap-northeast-2
-    endpoint: http://localhost:4566
-
 spring:
   kafka:
     bootstrap-servers: localhost:9092

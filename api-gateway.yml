@@ -121,6 +121,19 @@ spring:
               args:
                 name: blogCircuitBreaker
                 fallbackUri: forward:/fallback/blog
+        - id: blog-service-file-route
+          uri: lb://blog-service
+          predicates:
+            - Path=/api/blog/file/**
+          filters:
+            - StripPrefix=2
+            - name: CircuitBreaker
+              args:
+                name: blogCircuitBreaker
+                fallbackUri: forward:/fallback/blog
+            - name: RequestSize
+              args:
+                max-request-size: 100MB
 
         # ========== Shopping Service ==========
         - id: shopping-service-route

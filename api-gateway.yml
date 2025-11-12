@@ -111,16 +111,6 @@ spring:
           order: 5
 
         # ========== Blog Service ==========
-        - id: blog-service-route
-          uri: lb://blog-service
-          predicates:
-            - Path=/api/blog/**
-          filters:
-            - StripPrefix=2
-            - name: CircuitBreaker
-              args:
-                name: blogCircuitBreaker
-                fallbackUri: forward:/fallback/blog
         - id: blog-service-file-route
           uri: lb://blog-service
           predicates:
@@ -134,6 +124,19 @@ spring:
             - name: RequestSize
               args:
                 max-request-size: 100MB
+          order: 1
+
+        - id: blog-service-route
+          uri: lb://blog-service
+          predicates:
+            - Path=/api/blog/**
+          filters:
+            - StripPrefix=2
+            - name: CircuitBreaker
+              args:
+                name: blogCircuitBreaker
+                fallbackUri: forward:/fallback/blog
+          order: 2
 
         # ========== Shopping Service ==========
         - id: shopping-service-route

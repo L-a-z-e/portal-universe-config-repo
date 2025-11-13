@@ -7,6 +7,12 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://api-gateway:8080/auth-service
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+      location: ${java.io.tmpdir}
 
 logging:
   level:
@@ -40,3 +46,11 @@ management:
   metrics:
     tags:
       application: ${spring.application.name}
+
+aws:
+  s3:
+    access-key: test
+    secret-key: test
+    bucket-name: blog-bucket
+    region: ap-northeast-2
+    endpoint: http://localstack:4566

@@ -22,6 +22,6 @@ aws:
   s3:
     access-key: test
     secret-key: test
-    bucket-name: test-bucket
+    bucket-name: blog-bucket
     region: ap-northeast-2
     endpoint: http://localhost:4566

@@ -23,14 +23,11 @@ spring:
     oauth2:
       authorizationserver:
         issuer: http://localhost:8080/auth-service
-
-# OAuth2 클라이언트 환경별 설정 (커스텀 경로)
-oauth2:
-  client:
-    redirect-uris:
-      - http://localhost:30000/callback
-      - http://localhost:30000/silent-renew.html
-    post-logout-redirect-uris: http://localhost:30000
+        client:
+          redirect-uris:
+            - http://localhost:30000/callback
+            - http://localhost:30000/silent-renew.html
+          post-logout-redirect-uris: http://localhost:30000
 
 logging:
   level:

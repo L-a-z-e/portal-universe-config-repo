@@ -19,15 +19,12 @@ spring:
   security:
     oauth2:
       authorizationserver:
-        issuer: http://portal-universe:8080/auth-service
+        issuer: http://portal-universe:30000/auth-service
         client:
-          portal-client:
-            redirect-uris:
-              - http://localhost:30000/callback
-              - http://portal-universe:8080/callback
-            post-logout-redirect-uris:
-              - http://localhost:30000
-              - http://portal-universe:8080
+          redirect-uris:
+            - http://portal-universe:30000/callback
+          post-logout-redirect-uris:
+            - http://portal-universe:30000
 
 # 운영 환경 로그 레벨 (INFO)
 logging:

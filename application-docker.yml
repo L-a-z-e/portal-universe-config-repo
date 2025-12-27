@@ -5,6 +5,10 @@
 server:
   forward-headers-strategy: framework
 
+app:
+  frontend:
+    base-url: http://portal-shell:30000
+
 eureka:
   instance:
     prefer-ip-address: true

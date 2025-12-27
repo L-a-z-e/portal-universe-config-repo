@@ -15,12 +15,12 @@ spring:
   security:
     oauth2:
       authorizationserver:
-        issuer: http://portal-universe:30000/auth-service
+        issuer: https://portal-universe:30000/auth-service
         client:
           redirect-uris:
-            - http://portal-universe:30000/callback
+            - https://portal-universe:30000/callback
           post-logout-redirect-uris:
-            - http://portal-universe:30000
+            - https://portal-universe:30000
 
 # Docker 환경 디버깅용 상세 로그
 logging:

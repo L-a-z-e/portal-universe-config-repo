@@ -7,7 +7,7 @@ server:
 
 app:
   frontend:
-    base-url: http://portal-shell:30000
+    base-url: https://portal-shell:30000
 
 eureka:
   instance:

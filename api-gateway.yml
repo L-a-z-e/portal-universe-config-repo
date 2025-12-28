@@ -77,7 +77,7 @@ spring:
             - Path=/auth-service/login,/auth-service/logout
             - Method=GET,POST
           filters:
-#            - StripPrefix=1
+            - StripPrefix=1
             - name: PreserveHostHeader
             - name: OidcForwardedHeaders
               args:

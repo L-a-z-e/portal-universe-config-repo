@@ -38,7 +38,6 @@ spring:
             - Path=/auth-service/.well-known/**
           filters:
             - StripPrefix=1
-            - name: PreserveHostHeader
             - name: OidcForwardedHeaders
               args:
                 enabled: true
@@ -51,7 +50,6 @@ spring:
             - Path=/auth-service/oauth2/**
           filters:
             - StripPrefix=1
-            - name: PreserveHostHeader
             - name: OidcForwardedHeaders
               args:
                 enabled: true
@@ -64,7 +62,6 @@ spring:
             - Path=/auth-service/connect/**
           filters:
             - StripPrefix=1
-            - name: PreserveHostHeader
             - name: OidcForwardedHeaders
               args:
                 enabled: true
@@ -78,7 +75,6 @@ spring:
             - Method=GET,POST
           filters:
             - StripPrefix=1
-            - name: PreserveHostHeader
             - name: OidcForwardedHeaders
               args:
                 enabled: true
@@ -91,7 +87,6 @@ spring:
             - Path=/auth-service/default-ui.css,/auth-service/favicon.ico,/auth-service/webjars/**
           filters:
             - StripPrefix=1
-            - name: PreserveHostHeader
             - name: OidcForwardedHeaders
               args:
                 enabled: true

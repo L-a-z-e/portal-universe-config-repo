@@ -24,10 +24,11 @@ spring:
       authorizationserver:
         issuer: http://localhost:8080/auth-service
         client:
-          redirect-uris:
-            - http://localhost:30000/callback
-            - http://localhost:30000/silent-renew.html
-          post-logout-redirect-uris: http://localhost:30000
+          portal-client:
+            redirect-uris:
+              - http://localhost:30000/callback
+              - http://localhost:30000/silent-renew.html
+            post-logout-redirect-uris: http://localhost:30000
 
 logging:
   level:

@@ -28,7 +28,8 @@ spring:
             redirect-uris:
               - http://localhost:30000/callback
               - http://localhost:30000/silent-renew.html
-            post-logout-redirect-uris: http://localhost:30000
+            post-logout-redirect-uris:
+              - http://localhost:30000
 
 logging:
   level:

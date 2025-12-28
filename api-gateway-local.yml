@@ -16,9 +16,10 @@ logging:
     root: INFO
 
     # Gateway 핵심 로깅
-    org.springframework.cloud.gateway: INFO
+    org.springframework.cloud.gateway: DEBUG
     org.springframework.cloud.gateway.route: INFO
     org.springframework.cloud.gateway.filter: INFO
+    org.springframework.cloud.reactor.netty.http.server: DEBUG
 
     # 보안 관련 로깅
     org.springframework.security: INFO

@@ -22,8 +22,8 @@ spring:
     oauth2:
       authorizationserver:
         issuer: https://portal-universe:30000/auth-service
-        portal-client:
-          client:
+        client:
+          portal-client:
             redirect-uris:
               - https://portal-universe:30000/callback
             post-logout-redirect-uris:

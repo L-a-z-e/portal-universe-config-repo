@@ -1,6 +1,12 @@
 # ============================================
 # Auth Service - Docker Compose 환경
 # ============================================
+server:
+  forward-headers-strategy: framework
+  use-forward-headers: true
+  servlet:
+    session:
+      timeout: 1h
 
 spring:
   datasource:

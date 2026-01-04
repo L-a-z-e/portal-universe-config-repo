@@ -26,6 +26,7 @@ spring:
           portal-client:
             redirect-uris:
               - https://portal-universe:30000/callback
+              - https://portal-universe:30000/silent-renew.html
             post-logout-redirect-uris:
               - https://portal-universe:30000
 

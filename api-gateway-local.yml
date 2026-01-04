@@ -37,3 +37,8 @@ logging:
 
   file:
     name: logs/api-gateway.log
+app:
+  frontend:
+    host: localhost:30000
+    scheme: http
+    port: 30000

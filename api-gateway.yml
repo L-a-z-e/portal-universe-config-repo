@@ -15,7 +15,7 @@ spring:
 
       # X-Forwarded 헤더
       x-forwarded:
-        enabled: false
+        enabled: true
 
       # Discovery 설정
       discovery:

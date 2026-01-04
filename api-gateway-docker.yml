@@ -14,3 +14,31 @@ spring:
 logging:
   level:
     root: INFO
+
+    # Gateway 핵심 로깅
+    org.springframework.cloud.gateway: INFO
+    org.springframework.cloud.gateway.route: INFO
+    org.springframework.cloud.gateway.filter: INFO
+    org.springframework.cloud.reactor.netty.http.server: INFO
+
+    # 보안 관련 로깅
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+
+    # Circuit Breaker 로깅
+    io.github.resilience4j: INFO
+
+    # 커스텀 필터 로깅
+    com.portal.universe.apigateway: INFO
+
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level [${spring.application.name:},%X{traceId:-},%X{spanId:-}] %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level [${spring.application.name:},%X{traceId:-},%X{spanId:-}] %logger{36} - %msg%n"
+
+  file:
+    name: logs/api-gateway.log
+app:
+  frontend:
+    host: portal-universe:30000
+    scheme: https
+    port: 30000

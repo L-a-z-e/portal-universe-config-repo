@@ -23,7 +23,7 @@ logging:
 
     # 보안 관련 로깅
     org.springframework.security: INFO
-    org.springframework.security.oauth2: INFO
+    org.springframework.security.oauth2: TRACE
 
     # Circuit Breaker 로깅
     io.github.resilience4j: INFO

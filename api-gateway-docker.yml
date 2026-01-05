@@ -8,7 +8,8 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: https://portal-universe:30000/auth-service
-          jwk-set-uri: https://portal-universe:30000/auth-service/oauth2/jwks
+          jwk-set-uri: http://auth-service:8081/oauth2/jwks
+#          jwk-set-uri: https://portal-universe:30000/auth-service/oauth2/jwks
 
 # Docker 환경 디버깅용 상세 로그
 logging:

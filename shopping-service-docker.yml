@@ -11,6 +11,7 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: https://portal-universe:30000/auth-service
+          jwk-set-uri: http://auth-service:8081/oauth2/jwks
 
 logging:
   level:

@@ -22,7 +22,8 @@ spring:
   security:
     oauth2:
       authorizationserver:
-        # issuer: http://localhost:8080/auth-service  <-- 동적 감지를 위해 주석 처리
+        # Gateway(8080)를 통해 접근하므로 Issuer를 Gateway 주소로 고정
+        issuer: http://localhost:8080/auth-service
         client:
           portal-client:
             redirect-uris:

@@ -17,18 +17,17 @@ spring:
       x-forwarded:
         enabled: true
 
-      # Discovery 설정
+      # Discovery 설정 (Eureka 비활성화)
       discovery:
         locator:
           enabled: false
-          lower-case-service-id: true
 
-      # 라우팅 규칙
+      # 라우팅 규칙 (환경별 URL은 application-*.yml의 services.*.url 참조)
       routes:
         # ========== Auth Service ==========
         # OIDC Discovery
         - id: auth-service-oidc-discovery
-          uri: lb://auth-service
+          uri: ${services.auth.url}
           predicates:
             - Path=/auth-service/.well-known/**
           filters:
@@ -40,7 +39,7 @@ spring:
 
         # OAuth2 Protocol
         - id: auth-service-oauth2-protocol
-          uri: lb://auth-service
+          uri: ${services.auth.url}
           predicates:
             - Path=/auth-service/oauth2/**
           filters:
@@ -52,7 +51,7 @@ spring:
 
         # OIDC Endpoints
         - id: auth-service-oidc-endpoints
-          uri: lb://auth-service
+          uri: ${services.auth.url}
           predicates:
             - Path=/auth-service/connect/**
           filters:
@@ -64,7 +63,7 @@ spring:
 
         # Login/Logout Pages
         - id: auth-service-login-logout
-          uri: lb://auth-service
+          uri: ${services.auth.url}
           predicates:
             - Path=/auth-service/login,/auth-service/logout
             - Method=GET,POST
@@ -77,7 +76,7 @@ spring:
 
         # Static assets (로그인 UI 리소스)
         - id: auth-service-static
-          uri: lb://auth-service
+          uri: ${services.auth.url}
           predicates:
             - Path=/auth-service/default-ui.css,/auth-service/favicon.ico,/auth-service/webjars/**
           filters:
@@ -89,7 +88,7 @@ spring:
 
         # Auth REST API (OIDC 아님: 필터 미적용)
         - id: auth-service-api
-          uri: lb://auth-service
+          uri: ${services.auth.url}
           predicates:
             - Path=/api/auth/**
           filters:
@@ -102,7 +101,7 @@ spring:
 
         # ========== Blog Service ==========
         - id: blog-service-file-route
-          uri: lb://blog-service
+          uri: ${services.blog.url}
           predicates:
             - Path=/api/blog/file/**
           filters:
@@ -117,7 +116,7 @@ spring:
           order: 1
 
         - id: blog-service-route
-          uri: lb://blog-service
+          uri: ${services.blog.url}
           predicates:
             - Path=/api/blog/**
           filters:
@@ -130,7 +129,7 @@ spring:
 
         # ========== Shopping Service ==========
         - id: shopping-service-route
-          uri: lb://shopping-service
+          uri: ${services.shopping.url}
           predicates:
             - Path=/api/shopping/**
           filters:

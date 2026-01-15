@@ -5,15 +5,30 @@
 server:
   forward-headers-strategy: framework
 
+# Eureka 비활성화
 eureka:
-  instance:
-    prefer-ip-address: true
-    lease-renewal-interval-in-seconds: 10
-    lease-expiration-duration-in-seconds: 30
   client:
-    service-url:
-      defaultZone: http://discovery-service:8761/eureka
-    registry-fetch-interval-seconds: 10
+    enabled: false
+
+# 서비스 URL 정의 (K8s DNS - 기본 포트 80 가정)
+services:
+  gateway: { url: "http://api-gateway" }
+  auth: { url: "http://auth-service" }
+  blog: { url: "http://blog-service" }
+  shopping: { url: "http://shopping-service" }
+  notification: { url: "http://notification-service" }
+
+# Feign Client 설정
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
+  auth-service: { url: "${services.auth.url}" }
+  blog-service: { url: "${services.blog.url}" }
+  shopping-service: { url: "${services.shopping.url}" }
+  notification-service: { url: "${services.notification.url}" }
 
 spring:
   kafka:

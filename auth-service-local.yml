@@ -22,7 +22,7 @@ spring:
   security:
     oauth2:
       authorizationserver:
-        issuer: http://localhost:8080/auth-service
+        # issuer: http://localhost:8080/auth-service  <-- 동적 감지를 위해 주석 처리
         client:
           portal-client:
             redirect-uris:

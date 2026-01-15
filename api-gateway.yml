@@ -11,7 +11,7 @@ spring:
     gateway:
       # 전역 필터
       default-filters:
-        # - name: PreserveHostHeader  <-- Host 헤더 보존 비활성화 (X-Forwarded-* 사용)
+        - name: PreserveHostHeader
 
       # X-Forwarded 헤더
       x-forwarded:
@@ -34,7 +34,7 @@ spring:
             - StripPrefix=1
             - name: OidcPrefix
               args:
-                enabled: false # <-- OIDC Prefix 강제 주입 비활성화
+                enabled: true
           order: 0
 
         # OAuth2 Protocol
@@ -46,7 +46,7 @@ spring:
             - StripPrefix=1
             - name: OidcPrefix
               args:
-                enabled: false # <-- 비활성화
+                enabled: true
           order: 1
 
         # OIDC Endpoints
@@ -58,7 +58,7 @@ spring:
             - StripPrefix=1
             - name: OidcPrefix
               args:
-                enabled: false # <-- 비활성화
+                enabled: true
           order: 2
 
         # Login/Logout Pages
@@ -71,7 +71,7 @@ spring:
             - StripPrefix=1
             - name: OidcPrefix
               args:
-                enabled: false # <-- 비활성화
+                enabled: true
           order: 3
 
         # Static assets (로그인 UI 리소스)
@@ -83,7 +83,7 @@ spring:
             - StripPrefix=1
             - name: OidcPrefix
               args:
-                enabled: false # <-- 비활성화
+                enabled: true
           order: 4
 
         # Auth REST API (OIDC 아님: 필터 미적용)

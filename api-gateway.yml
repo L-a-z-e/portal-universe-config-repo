@@ -87,6 +87,18 @@ spring:
           order: 4
 
         # Auth REST API (OIDC 아님: 필터 미적용)
+        # Auth User API (Signup, Profile, etc.)
+        - id: auth-service-users
+          uri: ${services.auth.url}
+          predicates:
+            - Path=/api/users/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: authCircuitBreaker
+                fallbackUri: forward:/fallback/auth
+          order: 5
+
         - id: auth-service-api
           uri: ${services.auth.url}
           predicates:

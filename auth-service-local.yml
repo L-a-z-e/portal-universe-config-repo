@@ -31,6 +31,10 @@ spring:
               - http://localhost:30000/silent-renew.html
             post-logout-redirect-uris:
               - http://localhost:30000
+      client:
+        registration:
+          google:
+            redirect-uri: http://localhost:8080/auth-service/login/oauth2/code/google
 
 logging:
   level:

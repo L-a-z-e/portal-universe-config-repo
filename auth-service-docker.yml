@@ -29,6 +29,10 @@ spring:
               - https://portal-universe:30000/silent-renew.html
             post-logout-redirect-uris:
               - https://portal-universe:30000
+      client:
+        registration:
+          google:
+            redirect-uri: https://portal-universe:30000/auth-service/login/oauth2/code/google
 
 # Docker 환경 디버깅용 상세 로그
 logging:

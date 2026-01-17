@@ -74,6 +74,30 @@ spring:
                 enabled: true
           order: 3
 
+        # OAuth2 Social Login - Authorization
+        - id: auth-service-oauth2-authorization
+          uri: ${services.auth.url}
+          predicates:
+            - Path=/auth-service/oauth2/authorization/**
+          filters:
+            - StripPrefix=1
+            - name: OidcPrefix
+              args:
+                enabled: true
+          order: 3
+
+        # OAuth2 Social Login - Callback
+        - id: auth-service-oauth2-callback
+          uri: ${services.auth.url}
+          predicates:
+            - Path=/auth-service/login/oauth2/code/**
+          filters:
+            - StripPrefix=1
+            - name: OidcPrefix
+              args:
+                enabled: true
+          order: 3
+
         # Static assets (로그인 UI 리소스)
         - id: auth-service-static
           uri: ${services.auth.url}

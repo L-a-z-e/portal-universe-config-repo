@@ -4,7 +4,12 @@ spring:
     username: laze
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
+  flyway:
+    baseline-on-migrate: true
+    baseline-version: 0
   jpa:
+    hibernate:
+      ddl-auto: validate
     database-platform: org.hibernate.dialect.MySQLDialect
   security:
     oauth2:

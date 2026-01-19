@@ -9,6 +9,11 @@ server:
       timeout: 1h
 
 spring:
+  # OAuth2 Client 자동 구성 비활성화 (Google 소셜 로그인 미사용)
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration
+  
   datasource:
     url: jdbc:mysql://mysql-db:3306/auth_db?useSSL=false&allowPublicKeyRetrieval=true
     username: ${DB_USER:laze}
@@ -24,10 +29,6 @@ spring:
   
   security:
     oauth2:
-      # OAuth2 Client 비활성화 (Google 소셜 로그인 미사용)
-      client:
-        registration: {}
-        provider: {}
       # Authorization Server 설정
       authorizationserver:
         issuer: http://portal-universe:30000/auth-service

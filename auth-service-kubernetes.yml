@@ -24,6 +24,11 @@ spring:
   
   security:
     oauth2:
+      # OAuth2 Client 비활성화 (Google 소셜 로그인 미사용)
+      client:
+        registration: {}
+        provider: {}
+      # Authorization Server 설정
       authorizationserver:
         issuer: http://portal-universe:30000/auth-service
         client:
